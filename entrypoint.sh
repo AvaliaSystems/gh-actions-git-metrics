@@ -6,4 +6,6 @@ time=$(date)
 
 #ls -al >> $GITHUB_ENV
 
-echo "{time}={$time}" >> $GITHUB_OUTPUT
+echo "{time}={$time}"
+
+echo "{time}={xtime}" >> $GITHUB_OUTPUT

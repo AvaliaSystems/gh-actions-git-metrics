@@ -1,3 +1,5 @@
+name: Extract git metrics
+
 on: [workflow_dispatch]
 
 jobs:

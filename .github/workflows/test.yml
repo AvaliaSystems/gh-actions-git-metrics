@@ -19,6 +19,7 @@ jobs:
 #        run: echo "The time was ${{ steps.extract_metrics.outputs.time }}"
       - name: Commit files
         run: |
+          git log -C $GITHUB_WORKSPACE --no-merges
           echo "commit files, checking..."
           pwd
           ls -al 

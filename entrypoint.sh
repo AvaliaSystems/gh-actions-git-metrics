@@ -11,9 +11,9 @@ find src/
 ## See https://github.com/actions/runner/issues/2033
 git config --global --add safe.directory $GITHUB_WORKSPACE
 
-echo "gitlog in entrypoint">> $GITHUB_OUTPUT
+#echo "gitlog in entrypoint" >> $GITHUB_OUTPUT
 git log -C $GITHUB_WORKSPACE --no-merges --pretty=format:\'%h,"%f","%aN",%aE,%aI\'
-echo "done [gitlog in entrypoint"]>> $GITHUB_OUTPUT
+#echo "done [gitlog in entrypoint"] >> $GITHUB_OUTPUT
 
 node /avalia/src/index.js
 

@@ -21,6 +21,7 @@ jobs:
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Actions"
+          git status
           git add --all
           git commit -m "Update git metrics"
           git push 

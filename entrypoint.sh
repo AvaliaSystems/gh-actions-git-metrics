@@ -16,4 +16,4 @@ cp /avalia/src/output/* $GITHUB_WORKSPACE/metrics/
 echo "{time}={$time}"
 
 #echo "::set-output name=time::$time"
-echo "{time}={xtime}" >> $GITHUB_OUTPUT
+echo "{time}={time}" >> $GITHUB_OUTPUT

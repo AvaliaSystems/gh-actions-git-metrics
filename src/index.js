@@ -65,14 +65,19 @@ async function gitLog() {
         (d) => d.date.substring(0, 7),
         (d) => d.author_name,
       ));
+
+      /*
       const authorsPerMonthStats = authorsPerMonth.children.map(m => { return { month: m.data[0], authors: m.children.length } });
       const authorsPerMonthHeader = 'month,authors\n';
       await fs.promises.writeFile('output/git-authors-per-month.csv', authorsPerMonthHeader + d3.csvFormatBody(authorsPerMonthStats));
+      */
 
+      /*
       authorsPerMonth.children.forEach((month) => {
         console.log('\nProcessing month ' + month.data);
         month.children.forEach( (author_name) => { console.log(  'Processing author '  + author_name.data[0] + ' - ' + author_name.data[1])})
       })
+      */
     } catch (err) {
       console.error(err);
     }

@@ -1,8 +1,10 @@
 FROM node:16.18.0-alpine3.15
 
-COPY src/package*.json ./src/
-RUN cd src && npm install && cd ..
-COPY src/ src/
+RUN apk add git
+
+COPY src/package*.json /avalia/src/
+RUN cd /avalia/src && npm install && cd /
+COPY src/ /avalia/src/
 
 COPY entrypoint.sh /entrypoint.sh
 

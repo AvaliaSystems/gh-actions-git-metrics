@@ -9,7 +9,7 @@ find src/
 
 ls -al >> $GITHUB_ENV
 
-node src/index.js
+node /avalia/src/index.js
 
 echo "{time}={$time}"
 

@@ -1,0 +1,4 @@
+fatal: detected dubious ownership in repository at '/github/workspace'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /github/workspace

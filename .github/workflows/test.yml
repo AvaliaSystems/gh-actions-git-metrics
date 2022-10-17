@@ -19,6 +19,8 @@ jobs:
 #        run: echo "The time was ${{ steps.extract_metrics.outputs.time }}"
       - name: Commit files
         run: |
+          echo "commit files, checking..."
+          ls -al 
           git config user.email "action@github.com"
           git config user.name "GitHub Actions"
           git status

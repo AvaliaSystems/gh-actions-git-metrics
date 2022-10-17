@@ -5,14 +5,14 @@ import * as fs from 'fs';
 const METRICS_DIR = process.env.GITHUB_WORKSPACE + '/.avalia/metrics';
 
 async function gitLog() {
-  const gitlog = fs.createWriteStream('output/git.log', { flags: 'w' });
-  const giterr = fs.createWriteStream('output/git.err', { flags: 'w' });
+  await fs.promises.mkdir(METRICS_DIR, { recursive: true });
+  const gitlog = fs.createWriteStream(METRICS_DIR + '/git.log', { flags: 'w' });
+  const giterr = fs.createWriteStream(METRICS_DIR + '/git.err', { flags: 'w' });
   const header = 'hash,subject,author_name,author_email,date\n';
   gitlog.write(header);
   const cmd = spawn('git', ['-C', process.env.GITHUB_WORKSPACE, 'log', '--no-merges', '--pretty=format:\'%h,"%f","%aN",%aE,%aI\'']);
   cmd.stdout.pipe(gitlog);
   cmd.stderr.pipe(giterr);
-
 
   let gitData = header;
   cmd.stdout.on('data', (data) => {

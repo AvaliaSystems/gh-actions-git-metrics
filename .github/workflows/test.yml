@@ -21,6 +21,8 @@ jobs:
         run: |
           echo 'debugging...'
           echo $GITHUB_WORKSPACE
+          git --version
+          ls -al $GITHUB_WORKSPACE
           git log -C $GITHUB_WORKSPACE --no-merges
           echo "commit files, checking..."
           pwd

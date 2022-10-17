@@ -19,6 +19,7 @@ async function gitLog() {
   
   cmd.on('close', async (code) => {
     console.log('git log executed');
+    console.log(gitData);
     try {
 
       await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-commits.csv', gitData);

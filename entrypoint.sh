@@ -1,6 +1,7 @@
 #!/bin/sh -l
 
 echo "Hello $1"
+ls -al
 time=$(date)
 
 ls -al >> $GITHUB_ENV

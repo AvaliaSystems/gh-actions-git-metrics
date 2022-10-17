@@ -8,6 +8,9 @@ find src/
 
 #ls -al >> $GITHUB_ENV
 
+## See https://github.com/actions/runner/issues/2033
+git config --global --add safe.directory $GITHUB_OUTPUT
+
 echo "gitlog in entrypoint">> $GITHUB_OUTPUT
 git log -C $GITHUB_WORKSPACE --no-merges --pretty=format:\'%h,"%f","%aN",%aE,%aI\'
 echo "done [gitlog in entrypoint"]>> $GITHUB_OUTPUT

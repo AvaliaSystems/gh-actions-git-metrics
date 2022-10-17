@@ -17,9 +17,17 @@ async function gitLog() {
     gitData += data;
   });
   
+  let gitErr = '';
+  cmd.stderr.on('data', (data) => {
+    gitErr += data;
+  });
+
   cmd.on('close', async (code) => {
     console.log('git log executed, data:');
     console.log(gitData);
+    console.log('EOD');
+    console.log('git log executed, err:');
+    console.log(gitErr);
     console.log('EOD');
     try {
 
@@ -82,6 +90,7 @@ async function gitLog() {
       */
     } catch (err) {
       console.error(err);
+      console.log(err);
     }
   });
 }

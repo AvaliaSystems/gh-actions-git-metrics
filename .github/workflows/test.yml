@@ -23,7 +23,8 @@ jobs:
           echo $GITHUB_WORKSPACE
           git --version
           ls -al $GITHUB_WORKSPACE
-          git log -C $GITHUB_WORKSPACE --no-merges
+          # git log -C $GITHUB_WORKSPACE --no-merges
+          git log
           echo "commit files, checking..."
           pwd
           ls -al 

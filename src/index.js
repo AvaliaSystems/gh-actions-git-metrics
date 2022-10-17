@@ -1,25 +1,85 @@
 import * as d3 from 'd3';
-
-import util from 'util';
-import { exec } from 'child_process';
-
-const exec2 = util.promisify(exec);
+import { spawn } from 'child_process';
+import * as fs from 'fs';
 
 async function gitLog() {
-  try {
-      const { stdout, stderr } = await exec2('git log --no-merges --pretty=format:\'%h,"%f","%aN",%aE,%aI,"%cN",%cE,%cI\'');
+  const gitlog = fs.createWriteStream('output/git.log', { flags: 'w' });
+  const giterr = fs.createWriteStream('output/git.err', { flags: 'w' });
+  const header = 'hash,subject,author_name,author_email,date\n';
+  gitlog.write(header);
+  const cmd = spawn('git', ['log', '--no-merges', '--pretty=format:\'%h,"%f","%aN",%aE,%aI\'']);
+  cmd.stdout.pipe(gitlog);
+  cmd.stderr.pipe(giterr);
 
-      const header = 'hash,subject,author,email,date\n';
-      const commits = d3.csvParse(header + stdout);
 
-      const contributionsPerAuthor = d3.group(commits, d => d.name);
-      const contributionsPerSubject = d3.flatRollup(commits, v => d3.max(v, d => d.date), d => d.subject);
+  let gitData = header;
+  cmd.stdout.on('data', (data) => {
+    gitData += data;
+  });
+  
+  cmd.on('close', async (code) => {
+    console.log('git log executed');
+    try {
 
-      console.log(contributionsPerSubject);
+      await fs.promises.writeFile('output/git-commits.csv', gitData);
 
-  } catch (err) {
-     console.error(err);
-  };
-};
+      const commits = d3.csvParse(gitData);
+
+      const commitsPerAuthor = d3.flatRollup(
+        commits,
+        (v) => v.length,
+        (d) => d.author_name,
+      );
+      const commitsPerAuthorHeader = 'author_name,commits\n';
+      await fs.promises.writeFile('output/git-authors.csv', commitsPerAuthorHeader + d3.csvFormatBody(commitsPerAuthor));
+
+      const commitsPerAuthorPerMonth = d3.flatRollup(
+        commits,
+        (v) => v.length,
+        (d) => d.author_name,
+        (d) => d.date.substring(0, 7)
+      );
+      const commitsPerAuthorPerMonthHeader = 'author_name,commits,month\n';
+      await fs.promises.writeFile('output/git-authors-per-month.csv', commitsPerAuthorPerMonthHeader + d3.csvFormatBody(commitsPerAuthorPerMonth));
+
+      const commitsPerMonth = d3.flatRollup(
+        commits,
+        (v) => v.length,
+        (d) => d.date.substring(0, 7)
+      );
+      const commitsPerMonthHeader = 'month,commits\n';
+      await fs.promises.writeFile('output/git-commits-per-month.csv', commitsPerMonthHeader + d3.csvFormatBody(commitsPerMonth));
+
+      const commitsPerMonthPerAuthor = d3.flatRollup(
+        commits,
+        (v) => v.length,
+        (d) => d.date.substring(0, 7),
+        (d) => d.author_name,
+      );
+      const commitsPerMonthPerAuthorHeader = 'month,author_name,commits\n';
+      await fs.promises.writeFile('output/git-commits-per-month-per-author.csv', commitsPerMonthPerAuthorHeader + d3.csvFormatBody(commitsPerMonthPerAuthor));
+
+      const authorsPerMonth = d3.hierarchy(d3.rollup(
+        commits,
+        v => v.length,
+        (d) => d.date.substring(0, 7),
+        (d) => d.author_name,
+      ));
+      const authorsPerMonthStats = authorsPerMonth.children.map(m => { return { month: m.data[0], authors: m.children.length } });
+      const authorsPerMonthHeader = 'month,authors\n';
+      await fs.promises.writeFile('output/git-authors-per-month.csv', authorsPerMonthHeader + d3.csvFormatBody(authorsPerMonthStats));
+
+      authorsPerMonth.children.forEach((month) => {
+        console.log('\nProcessing month ' + month.data);
+        month.children.forEach( (author_name) => { console.log(  'Processing author '  + author_name.data[0] + ' - ' + author_name.data[1])})
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  });
+}
 
 gitLog();
+
+// contributors / month
+// contributions / contributor

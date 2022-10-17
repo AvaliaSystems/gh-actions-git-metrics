@@ -20,7 +20,9 @@ jobs:
       - name: Commit files
         run: |
           echo "commit files, checking..."
+          pwd
           ls -al 
+          find output
           git config user.email "action@github.com"
           git config user.name "GitHub Actions"
           git status

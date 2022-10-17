@@ -21,10 +21,12 @@ jobs:
         run: |
           echo 'debugging...'
           echo $GITHUB_WORKSPACE
+          echo "::group::Testing git..."
           git --version
-          ls -al $GITHUB_WORKSPACE
-          # git log -C $GITHUB_WORKSPACE --no-merges
-          git log
+          ls -al $GITHUB_WORKSPACE/.git
+          git -C $GITHUB_WORKSPACE log --oneline --no-merges
+          echo "::endgroup::"
+          # git log
           echo "commit files, checking..."
           pwd
           ls -al 
@@ -32,7 +34,7 @@ jobs:
           git config user.email "action@github.com"
           git config user.name "GitHub Actions"
           git status
-          git add --all
+          git add output
           git commit -m "Update git metrics"
           git push 
 

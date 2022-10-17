@@ -15,8 +15,8 @@ jobs:
         with:
           who-to-greet: 'Olivier'
       # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.extract_metrics.outputs.time }}"
+#      - name: Get the output time
+#        run: echo "The time was ${{ steps.extract_metrics.outputs.time }}"
       - name: Commit files
         run: |
           git config user.email "action@github.com"

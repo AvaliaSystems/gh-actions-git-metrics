@@ -10,6 +10,7 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'docker://avaliasystems/gh-actions-git-metrics:main'
+  image: 'Dockerfile'
+#  image: 'docker://avaliasystems/gh-actions-git-metrics:main'
   args:
     - ${{ inputs.who-to-greet }}

@@ -11,9 +11,9 @@ find src/
 
 node /avalia/src/index.js
 mkdir -p $GITHUB_WORKSPACE/metrics
-#cp /avalia/src/output/* $GITHUB_WORKSPACE/metrics/
+cp /avalia/src/output/* $GITHUB_WORKSPACE/metrics/
 
 #echo "{time}={$time}"
 
-#echo "::set-output name=time::$time"
+echo "::set-output name=time::$time"
 #echo "{time}={time}" >> $GITHUB_OUTPUT

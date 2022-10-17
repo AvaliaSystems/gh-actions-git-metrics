@@ -8,6 +8,10 @@ find src/
 
 #ls -al >> $GITHUB_ENV
 
+echo "gitlog in entrypoint">> $GITHUB_OUTPUT
+git log -C $GITHUB_WORKSPACE --no-merges --pretty=format:\'%h,"%f","%aN",%aE,%aI\'
+echo "done [gitlog in entrypoint"]>> $GITHUB_OUTPUT
+
 node /avalia/src/index.js
 
 ls -al

@@ -60,7 +60,7 @@ async function gitLog() {
         (d) => d.date.substring(0, 7)
       );
       const commitsPerMonthHeader = 'month,commits\n';
-      await fs.promises.writeFile(METRICS_DIR + '/output/git-commits-per-month.csv', commitsPerMonthHeader + d3.csvFormatBody(commitsPerMonth));
+      await fs.promises.writeFile(METRICS_DIR + '/git-commits-per-month.csv', commitsPerMonthHeader + d3.csvFormatBody(commitsPerMonth));
 
       const commitsPerMonthPerAuthor = d3.flatRollup(
         commits,

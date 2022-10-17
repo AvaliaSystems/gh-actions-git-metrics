@@ -19,24 +19,12 @@ jobs:
       # Use the output from the `hello` step
 #      - name: Get the output time
 #        run: echo "The time was ${{ steps.extract_metrics.outputs.time }}"
-      - name: Commit files
-        run: |
-          echo 'debugging...'
-          echo $GITHUB_WORKSPACE
-          echo "::group::Testing git..."
-          git --version
-          ls -al $GITHUB_WORKSPACE/.git
-          git -C $GITHUB_WORKSPACE log --oneline --no-merges
-          echo "::endgroup::"
-          # git log
-          echo "commit files, checking..."
-          pwd
-          ls -al 
-          find output
-          git config user.email "action@github.com"
-          git config user.name "GitHub Actions"
-          git status
-          git add output
-          git commit -m "Update git metrics"
-          git push 
+#      - name: Commit files
+#        run: |
+#          git config user.email "action@github.com"
+#          git config user.name "GitHub Actions"
+#          git status
+#          git add output
+#          git commit -m "Update git metrics"
+#          git push 
 

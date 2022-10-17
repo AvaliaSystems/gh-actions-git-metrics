@@ -2,6 +2,8 @@ import * as d3 from 'd3';
 import { spawn } from 'child_process';
 import * as fs from 'fs';
 
+const METRICS_DIR = process.env.GITHUB_WORKSPACE + '/.avalia/metrics';
+
 async function gitLog() {
   const gitlog = fs.createWriteStream('output/git.log', { flags: 'w' });
   const giterr = fs.createWriteStream('output/git.err', { flags: 'w' });
@@ -31,7 +33,7 @@ async function gitLog() {
     console.log('EOD');
     try {
 
-      await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-commits.csv', gitData);
+      await fs.promises.writeFile(METRICS_DIR + '/git-commits.csv', gitData);
 
       const commits = d3.csvParse(gitData);
 
@@ -41,7 +43,7 @@ async function gitLog() {
         (d) => d.author_name,
       );
       const commitsPerAuthorHeader = 'author_name,commits\n';
-      await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-authors.csv', commitsPerAuthorHeader + d3.csvFormatBody(commitsPerAuthor));
+      await fs.promises.writeFile(METRICS_DIR + '/git-authors.csv', commitsPerAuthorHeader + d3.csvFormatBody(commitsPerAuthor));
 
       const commitsPerAuthorPerMonth = d3.flatRollup(
         commits,
@@ -50,7 +52,7 @@ async function gitLog() {
         (d) => d.date.substring(0, 7)
       );
       const commitsPerAuthorPerMonthHeader = 'author_name,commits,month\n';
-      await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-authors-per-month.csv', commitsPerAuthorPerMonthHeader + d3.csvFormatBody(commitsPerAuthorPerMonth));
+      await fs.promises.writeFile(METRICS_DIR + '/git-authors-per-month.csv', commitsPerAuthorPerMonthHeader + d3.csvFormatBody(commitsPerAuthorPerMonth));
 
       const commitsPerMonth = d3.flatRollup(
         commits,
@@ -58,7 +60,7 @@ async function gitLog() {
         (d) => d.date.substring(0, 7)
       );
       const commitsPerMonthHeader = 'month,commits\n';
-      await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-commits-per-month.csv', commitsPerMonthHeader + d3.csvFormatBody(commitsPerMonth));
+      await fs.promises.writeFile(METRICS_DIR + '/output/git-commits-per-month.csv', commitsPerMonthHeader + d3.csvFormatBody(commitsPerMonth));
 
       const commitsPerMonthPerAuthor = d3.flatRollup(
         commits,
@@ -67,7 +69,7 @@ async function gitLog() {
         (d) => d.author_name,
       );
       const commitsPerMonthPerAuthorHeader = 'month,author_name,commits\n';
-      await fs.promises.writeFile(process.env.GITHUB_WORKSPACE + '/output/git-commits-per-month-per-author.csv', commitsPerMonthPerAuthorHeader + d3.csvFormatBody(commitsPerMonthPerAuthor));
+      await fs.promises.writeFile(METRICS_DIR + '/git-commits-per-month-per-author.csv', commitsPerMonthPerAuthorHeader + d3.csvFormatBody(commitsPerMonthPerAuthor));
 
       const authorsPerMonth = d3.hierarchy(d3.rollup(
         commits,
@@ -76,11 +78,9 @@ async function gitLog() {
         (d) => d.author_name,
       ));
 
-      /*
       const authorsPerMonthStats = authorsPerMonth.children.map(m => { return { month: m.data[0], authors: m.children.length } });
       const authorsPerMonthHeader = 'month,authors\n';
-      await fs.promises.writeFile('output/git-authors-per-month.csv', authorsPerMonthHeader + d3.csvFormatBody(authorsPerMonthStats));
-      */
+      await fs.promises.writeFile(METRICS_DIR + '/git-authors-per-month.csv', authorsPerMonthHeader + d3.csvFormatBody(authorsPerMonthStats));
 
       /*
       authorsPerMonth.children.forEach((month) => {

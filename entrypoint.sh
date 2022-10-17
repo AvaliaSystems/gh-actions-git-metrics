@@ -7,7 +7,7 @@ ls -al ..
 time=$(date)
 find src/
 
-ls -al >> $GITHUB_ENV
+#ls -al >> $GITHUB_ENV
 
 node /avalia/src/index.js
 mkdir -p $GITHUB_WORKSPACE/metrics

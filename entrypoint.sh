@@ -3,7 +3,7 @@
 echo "Hello $1"
 time=$(date)
 
-#ls -al >> $GITHUB_ENV
+ls -al >> $GITHUB_ENV
 
 node src/index.js
 

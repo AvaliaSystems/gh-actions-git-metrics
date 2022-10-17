@@ -5,6 +5,7 @@ pwd
 ls -al
 ls -al ..
 time=$(date)
+find src/
 
 ls -al >> $GITHUB_ENV
 

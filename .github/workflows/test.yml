@@ -5,7 +5,7 @@ on: [workflow_dispatch]
 jobs:
   clone_whole_history_and_run:
     runs-on: ubuntu-latest
-    name: A job to extract metrics
+    name: Extract git metrics
     steps:
       - name: Checkout (whole history)
         uses: actions/checkout@v3

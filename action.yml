@@ -1,16 +1,8 @@
 name: 'Git Metrics'
 description: 'Extract git metrics for the code repository'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
-#  image: 'docker://avaliasystems/gh-actions-git-metrics:main'
+  # image: 'Dockerfile'
+  image: 'docker://avaliasystems/gh-actions-git-metrics:v0.1.2'
   args:
     - ${{ inputs.who-to-greet }}

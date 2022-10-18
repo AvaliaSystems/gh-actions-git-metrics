@@ -3,6 +3,6 @@ description: 'Extract git metrics for the code repository'
 runs:
   using: 'docker'
   # image: 'Dockerfile'
-  image: 'docker://avaliasystems/gh-actions-git-metrics:v0.1.2'
+  image: 'docker://avaliasystems/gh-actions-git-metrics:0.1.3'
   args:
     - ${{ inputs.who-to-greet }}

@@ -11,7 +11,7 @@ async function gitLog() {
 
   const header = 'hash,subject,author_name,author_email,date\n';
   gitlog.write(header);
-  const cmd = spawn('git', ['-C', process.env.GITHUB_WORKSPACE, 'log', '--no-merges', '--pretty=format:\'%h,"%f","%aN",%aE,%aI\'']);
+  const cmd = spawn('git', ['-C', process.env.GITHUB_WORKSPACE, 'log', '--no-merges', '--pretty=format:\'%h,"%f","%aN",%aE,%aI']);
   cmd.stdout.pipe(gitlog);
   cmd.stderr.pipe(giterr);
 

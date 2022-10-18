@@ -1,4 +1,6 @@
 hash,subject,author_name,author_email,date
+'6f13437,"Cleanup","Olivier Liechti",olivier.liechti@wasabi-tech.com,2022-10-18T07:02:50+02:00'
+'72dc389,"Update-software-metrics","Avalia DX Hub",dxhub@avalia.systems,2022-10-18T03:44:21+00:00'
 '9509e3d,"Fix-typo","Olivier Liechti",olivier.liechti@wasabi-tech.com,2022-10-18T05:42:14+02:00'
 '89925b5,"Update-software-metrics","Avalia DX Hub",dxhub@avalia.systems,2022-10-18T03:40:51+00:00'
 '7f3d462,"Use-Docker-image-in-workflow","Olivier Liechti",olivier.liechti@wasabi-tech.com,2022-10-18T05:40:06+02:00'

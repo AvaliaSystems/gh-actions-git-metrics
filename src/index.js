@@ -8,6 +8,7 @@ async function gitLog() {
   await fs.promises.mkdir(METRICS_DIR, { recursive: true });
   const gitlog = fs.createWriteStream(METRICS_DIR + '/git.log', { flags: 'w' });
   const giterr = fs.createWriteStream(METRICS_DIR + '/git.err', { flags: 'w' });
+
   const header = 'hash,subject,author_name,author_email,date\n';
   gitlog.write(header);
   const cmd = spawn('git', ['-C', process.env.GITHUB_WORKSPACE, 'log', '--no-merges', '--pretty=format:\'%h,"%f","%aN",%aE,%aI\'']);
@@ -25,16 +26,8 @@ async function gitLog() {
   });
 
   cmd.on('close', async (code) => {
-    console.log('git log executed, data:');
-    console.log(gitData);
-    console.log('EOD');
-    console.log('git log executed, err:');
-    console.log(gitErr);
-    console.log('EOD');
     try {
-
       await fs.promises.writeFile(METRICS_DIR + '/git-commits.csv', gitData);
-
       const commits = d3.csvParse(gitData);
 
       const commitsPerAuthor = d3.flatRollup(
@@ -97,5 +90,3 @@ async function gitLog() {
 
 gitLog();
 
-// contributors / month
-// contributions / contributor
